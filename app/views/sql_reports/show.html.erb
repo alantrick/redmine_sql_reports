@@ -1,0 +1,21 @@
+<% html_title @report.title -%>
+<h2>Report: <%= @report.title %></h2>
+
+<% if @table.blank? %>
+  <p id="errorExplanation"><%= @error %></p>
+<% else %>
+  <table>
+  <tr>
+  <%- for col in @table[0].keys -%>
+    <th><%= report_header col %></th>
+  <%- end -%>
+  </tr>
+  <% for row in @table %>
+      <tr>
+      <% for col in row.keys %>
+          <td><%= report_cell col,row[col] %></td>
+      <% end %>
+      </tr>
+  <% end %>
+  </table>
+<% end %>

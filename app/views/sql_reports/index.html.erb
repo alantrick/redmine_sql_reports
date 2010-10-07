@@ -1,0 +1,9 @@
+<h2>Reports</h2>
+
+<ul>
+<% @reports.each do |report| %>
+  <li>
+  <%= link_to report[:title], {:controller => 'sql_reports', :action => 'show', :id => report[:id]} %>
+  </li>
+<% end %>
+</ul>

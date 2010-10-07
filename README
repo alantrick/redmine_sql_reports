@@ -1,0 +1,17 @@
+= SQL Reports for Redmine
+
+== Introduction
+
+This is a plugin written for Redmine that allows the display of arbitrary SQL
+queries. At the moment, it only displays those queries, there is no way to
+create or edit them.
+
+Also, BIG FAT WARNING. By using this module, it is very possible to create
+security problems. Reports are visible to all authenticated users, regardless
+of whether they would normally be able to view the content or not. Be careful
+about the SQL code you put in your queries.
+
+== License
+
+See the COPYING file.
+
