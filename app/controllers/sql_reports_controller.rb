@@ -15,7 +15,7 @@ class SqlReportsController < ApplicationController
     @table = []
     begin
       @table = @report.run_query(args)
-    rescue ArgumentError => e
+    rescue Exception => e
       @error = e.message
     end
   end

@@ -6,13 +6,13 @@
 <% else %>
   <table>
   <tr>
-  <%- for col in @table[0].keys -%>
+  <%- for col in @table.columns -%>
     <th><%= report_header col %></th>
   <%- end -%>
   </tr>
-  <% for row in @table %>
+  <% @table.rows do |row| %>
       <tr>
-      <% for col in row.keys %>
+      <% for col in @table.columns %>
           <td><%= report_cell col,row[col] %></td>
       <% end %>
       </tr>

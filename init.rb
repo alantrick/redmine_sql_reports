@@ -22,7 +22,7 @@ Redmine::Plugin.register :redmine_sql_reports do
   description 'Allows the creation of reports using arbitrary SQL'
   version '0.1.0'
   url 'http://example.com/path/to/plugin'
-  author_url 'https://tricks.webfactional.com/trick'
+  author_url 'http://tricks.webfactional.com/trick'
   
   permission :view_reports, {:sql_reports => [:index, :show]}, :require => :loggedin
   

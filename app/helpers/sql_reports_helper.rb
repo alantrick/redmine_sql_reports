@@ -32,3 +32,38 @@ module SqlReportsHelper
       return data
     end
 end
+
+
+class MySQLResult
+  def initialize(stmt)
+    @stmt = stmt.execute
+    @columns = @stmt.result_metadata.fetch_fields.map { |f| f.name }
+  end
+  
+  def columns
+    @columns
+  end
+  
+  def rows
+    row = @stmt.fetch
+    while row != nil
+      yield Hash[*columns.zip(row).flatten]
+      row = @stmt.fetch
+    end
+  end
+end
+class SQLiteResult
+  def initialize(result)
+    @res = result.execute
+  end
+  
+  def columns
+    @res.columns
+  end
+  
+  def rows
+    for row in @res
+      yield row
+    end
+  end
+end

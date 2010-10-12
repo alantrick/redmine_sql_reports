@@ -4,6 +4,7 @@
 class SqlReport < ActiveRecord::Base
   unloadable
   
+  
   def run_query(params)
     # make copy of query to expand arguments
     expanded_query = String.new query
@@ -14,13 +15,19 @@ class SqlReport < ActiveRecord::Base
         raise ArgumentError,
           'Parameter %s not provided, and no default available' % $1
       end
-      sql_quote(arg.to_s)
+      connection.quote(arg.to_s)
     end
-    return connection.select_all expanded_query
-  end
-  
-  def sql_quote(str)
-    str.gsub(/\\|'/) { |c| "\\#{c}" }
-  end
+    
+    stmt = connection.raw_connection.prepare expanded_query
+    
+    adapters = {'MySQL' => MySQLResult, 'SQLite' => SQLiteResult}
+    cls = adapters[connection.adapter_name]
+    if cls == nil
+      raise NotImplementedError,
+        "Unsupported database '%s'" % connection.adapter_name
+    end
+    return cls.new stmt
 
+  end
 end
+
