@@ -2,4 +2,14 @@
 # see COPYING for license
 
 en:
-  sql_reports_title: "Reports"
+  sql_reports_title: Reports
+  edit_report: Edit Report
+  report_title: "Report: {{report}}"
+  edit_report_title: "Editing Report: {{report}}"
+  field_query: "Query"
+  activerecord:
+    models:
+      sql_report: Report
+    attributes:
+      sql_report:
+        title: "name"

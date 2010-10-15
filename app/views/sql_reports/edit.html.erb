@@ -1,0 +1,10 @@
+<% html_title l(:edit_report_title, {:report => @report}) -%>
+<h2><%= l(:edit_report_title, {:report => @report}) %></h2>
+
+<% labelled_tabular_form_for :report, @report, :url => { :action => "edit", :id=> @report.id },
+                                           :html => { :id => 'report-form', 
+                                                      :class => nil } do |f| %>
+<%= render :partial => 'form' %>
+
+<%= submit_tag "Update" %>
+<% end %> 

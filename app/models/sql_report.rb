@@ -4,7 +4,6 @@
 class SqlReport < ActiveRecord::Base
   unloadable
   
-  
   def run_query(params)
     # make copy of query to expand arguments
     expanded_query = String.new query
@@ -27,7 +26,10 @@ class SqlReport < ActiveRecord::Base
         "Unsupported database '%s'" % connection.adapter_name
     end
     return cls.new stmt
-
+  end
+  
+  def to_s
+    title
   end
 end
 

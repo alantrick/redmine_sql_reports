@@ -19,4 +19,14 @@ class SqlReportsController < ApplicationController
       @error = e.message
     end
   end
+  
+  def edit
+    render_403 if !User.current.admin
+    @report = SqlReport.find(params[:id])
+    if request.post? and @report.update_attributes(params[:report])
+      flash[:notice] = l(:notice_successful_update)
+      redirect_to :action => 'show', :id => @report
+    end
+  end
+  
 end

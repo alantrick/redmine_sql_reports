@@ -1,5 +1,9 @@
-<% html_title @report.title -%>
-<h2>Report: <%= @report.title %></h2>
+<% html_title l(:report_title, {:report => @report}) -%>
+<div class="contextual">
+<%= link_to l(:edit_report), { :controller => 'sql_reports', :action => 'edit',
+  :id => @report.id }, :class => 'icon icon-edit' -%>
+</div>
+<h2><%= l(:report_title, {:report => @report}) %></h2>
 
 <% if @table.blank? %>
   <p id="errorExplanation"><%= @error %></p>
