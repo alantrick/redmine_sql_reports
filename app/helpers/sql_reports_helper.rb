@@ -4,32 +4,35 @@
 module SqlReportsHelper
 
     def report_header column
-      if column =~ /(\w+)\_id$/
-        return $1.capitalize
+      if column =~ /^(\w+)\_id$/
+        column = $1
       end
-      return column
+      return column.split(/[\s_]+/).map{|s| s.capitalize}.join ' '
     end
     
-    # TODO: this is super hackish and the current behavior will probably go away
-    # soon
     def report_cell column, data
-      if column =~ /(\w+)\_id$/
-        case $1
-        when 'user'
-          d = User.find(data)
-          return link_to d.to_s, {:controller => "users", :action => 'show', :id => data}
-        when 'project'
-          d = Project.find(data)
-          return link_to d.to_s, {:controller => "projects", :action => 'show', :id => data}
-        when 'issue'
-          d = Issue.find(data)
-          return link_to d.to_s, {:controller => "issues", :action => 'show', :id => data}
-        when 'version'
-          d = Version.find(data)
-          return link_to d.to_s, {:controller => "versions", :action => 'show', :id => data}
-        end
+      if column =~ /^([A-Z]\w+)$/
+        return link_model $1, data
+      elsif column =~ /^(\w+)\_id$/
+        # go from under_scores to CamelCase
+        classname = $1.split('_').map{|s| s.capitalize}.join
+        return link_model classname, data
+      else
+        return data
       end
-      return data
+    end
+    
+    def link_model classname, data
+      begin
+        cls = Kernel.const_get(classname)
+        d = cls.find(data)
+        # using cls.table_name for the controller name is a hack,
+        # but I think it works and I don't know a better way to access the
+        # controller
+        return link_to d.to_s, {:controller => cls.table_name, :action => 'show', :id => data}
+      rescue NameError, LoadError, NoMethodError
+        return data
+      end
     end
 end
 
