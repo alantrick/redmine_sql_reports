@@ -1,7 +1,11 @@
 <% html_title l(:report_title, {:report => @report}) -%>
 <div class="contextual">
-<%= link_to l(:edit_report), { :controller => 'sql_reports', :action => 'edit',
-  :id => @report.id }, :class => 'icon icon-edit' -%>
+<%= link_to_if_admin l(:button_update),
+  {:controller => 'sql_reports', :action => 'edit', :id => @report},
+  :class => 'icon icon-edit' -%>
+<%= link_to_if_admin l(:button_delete),
+  {:controller => 'sql_reports', :action => 'destroy', :id => @report},
+  :confirm => l(:text_are_you_sure), :method => :post, :class => 'icon icon-del' %>
 </div>
 <h2><%= l(:report_title, {:report => @report}) %></h2>
 
