@@ -3,8 +3,10 @@
 
 en:
   sql_reports_title: Reports
+  add_report: Add Report
   edit_report: Edit Report
   report_title: "Report: {{report}}"
+  add_report_title: "Add Report"
   edit_report_title: "Editing Report: {{report}}"
   field_query: "Query"
   activerecord:

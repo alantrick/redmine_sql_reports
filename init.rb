@@ -24,7 +24,7 @@ Redmine::Plugin.register :redmine_sql_reports do
   url 'http://example.com/path/to/plugin'
   author_url 'http://tricks.webfactional.com/trick'
   
-  permission :view_reports, {:sql_reports => [:index, :show]}, :require => :loggedin
+  permission :view_reports, {:sql_reports => [:index, :show, :edit, :add]}, :require => :loggedin
   
   menu :top_menu, :redmine_sql_reports, {:controller => :sql_reports, :action => 'index'},
     :caption => :sql_reports_title
