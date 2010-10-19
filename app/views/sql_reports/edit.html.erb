@@ -4,7 +4,7 @@
 <% labelled_tabular_form_for :report, @report, :url => { :action => "edit", :id=> @report.id },
                                            :html => { :id => 'report-form', 
                                                       :class => nil } do |f| %>
-<%= render :partial => 'form' %>
+<%= render :partial => 'form', :locals => {:f => f} -%>
 
 <%= submit_tag "Update" %>
 <% end %> 
