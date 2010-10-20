@@ -4,6 +4,10 @@
 class SqlReport < ActiveRecord::Base
   unloadable
   
+  def self.find_in_order
+    SqlReport.find :all, :order => connection.quote_column_name('order')
+  end
+  
   def run_query(params)
     # make copy of query to expand arguments
     expanded_query = String.new query

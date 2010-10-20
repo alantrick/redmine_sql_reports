@@ -9,6 +9,7 @@ en:
   add_report_title: "Add Report"
   edit_report_title: "Editing Report: {{report}}"
   field_query: "Query"
+  field_order: "Order"
   activerecord:
     models:
       sql_report: Report

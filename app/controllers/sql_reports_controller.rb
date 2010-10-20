@@ -5,7 +5,7 @@ class SqlReportsController < ApplicationController
   unloadable
   before_filter :authorize_global
   def index
-    @reports = SqlReport.find(:all)
+    @reports = SqlReport.find_in_order
   end
   
   def show

@@ -1,5 +1,5 @@
 <div class="contextual">
-<%= link_to l(:add_report), { :controller => 'sql_reports', :action => 'add'},
+<%= link_to_if_admin l(:add_report), { :controller => 'sql_reports', :action => 'add'},
     :class => 'icon icon-add' -%>
 </div>
 <h3><%= l(:sql_reports_title) %></h2>
