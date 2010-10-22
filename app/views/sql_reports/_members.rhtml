@@ -1,0 +1,55 @@
+<% members = @report.sql_report_members.find(:all, :include => [:principal]).sort %>
+  
+<div class="splitcontentleft">
+<% if members.any? %>
+<table class="list members">
+  <thead><tr>
+    <th><%= l(:label_user) %> / <%= l(:label_group) %></th>
+    <th style="width:15%"></th>
+  </tr></thead>
+  <tbody>
+  <% members.each do |member| %>
+  <% next if member.new_record? %>
+  <tr id="member-<%= member.id %>" class="<%= cycle 'odd', 'even' %> member">
+  <td class="<%= member.principal.class.name.downcase %>"><%= link_to_user member.principal %></td>
+  <td class="buttons">
+      <%= link_to_remote(l(:button_delete),
+        {:url => {
+          :controller => 'sql_report_members', :action => 'destroy',
+            :principal_id => member.principal, :sql_report_id => @report
+          },                                              
+          :method => :post,
+        },
+        :title => l(:button_delete), :class => 'icon icon-del') %>
+  </td>
+  </tr>
+<% end; reset_cycle %>
+  </tbody>
+</table>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
+</div>
+
+<% principals = Principal.active.find(:all, :limit => 100, :order => 'type, login, lastname ASC') - @report.principals %>
+
+<div class="splitcontentright">
+<% if principals.any? %>
+  <% remote_form_for(:member, @member, :url => {:controller => 'sql_report_members', :action => 'new', :id => @report}, :method => :post) do |f| %>
+    <fieldset><legend><%=l(:label_member_new)%></legend>
+    
+    <p><%= text_field_tag 'principal_search', nil %></p>
+    <%= observe_field(:principal_search,
+                 :frequency => 0.5,
+                 :update => :principals,
+                 :url => { :controller => 'sql_report_members', :action => 'autocomplete_for_member', :id => @report },
+                 :with => 'q')
+                  %>
+    <div id="principals">
+      <%= principals_check_box_tags 'member[user_ids][]', principals %>
+    </div>
+    <p><%= submit_tag l(:button_add) %></p>
+    </fieldset>
+  <% end %>
+<% end %>
+</div>

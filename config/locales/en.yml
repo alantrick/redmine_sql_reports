@@ -10,6 +10,7 @@ en:
   edit_report_title: "Editing Report: {{report}}"
   field_query: "Query"
   field_order: "Order"
+  field_public: "Public"
   activerecord:
     models:
       sql_report: Report

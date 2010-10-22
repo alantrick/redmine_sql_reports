@@ -2,6 +2,13 @@
 # see COPYING for license
 
 module SqlReportsHelper
+  
+  def report_edit_tabs
+      tabs = [{:name => 'info', :partial => 'edit', :label => :label_information_plural},
+        {:name => 'members', :partial => 'members', :label => :label_member_plural}
+      ]
+  end
+
   def link_to_if_admin *args
     if User.current.admin
       link_to *args

@@ -3,9 +3,28 @@
 
 class SqlReport < ActiveRecord::Base
   unloadable
+  has_many :sql_report_members
+  has_many :principals, :through => :sql_report_members
+  
+  named_scope :visible, lambda { { :conditions => SqlReport.visible_by(User.current) } }
+  
+  def self.visible_by(user)
+    return {} if user.admin? # no constraints for admin
+    sms = SqlReportMember.find(:all, :conditions => {:principal_id => user })
+    report_ids = sms.map { |sm| sm.sql_report_id }
+    constraint = "public = #{connection.quoted_true}"
+    constraint = ["id IN (?) OR " + constraint, report_ids] if report_ids.any?
+    return constraint
+  end
   
   def self.find_in_order
     SqlReport.find :all, :order => connection.quote_column_name('order')
+  end
+  
+  def visible?(user)
+    return true if user.admin? or public
+    return SqlReportMember.find(:all, :conditions =>
+      {:principal_id=> user, 'sql_report_id' =>id}).any?
   end
   
   def run_query(params)

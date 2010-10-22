@@ -4,13 +4,15 @@
 class SqlReportsController < ApplicationController
   unloadable
   before_filter :authorize_global
+  
   def index
-    @reports = SqlReport.find_in_order
+    @reports = SqlReport.visible.find_in_order
   end
   
   def show
     render_404 if !SqlReport.exists? params[:id]
     @report = SqlReport.find params[:id]
+    render_403 if !@report.visible? User.current
     args = {'user_id' => session[:user_id]}
     @error = "The report returned no results"
     @table = []
