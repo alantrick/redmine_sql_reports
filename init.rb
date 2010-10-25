@@ -20,7 +20,7 @@ Redmine::Plugin.register :redmine_sql_reports do
   name 'Redmine Sql Reports plugin'
   author 'Alan Trick'
   description 'Allows the creation of reports using arbitrary SQL'
-  version '0.1.0'
+  version '0.2.0'
   url 'http://example.com/path/to/plugin'
   author_url 'http://tricks.webfactional.com/trick'
   
