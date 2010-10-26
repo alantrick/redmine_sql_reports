@@ -28,6 +28,6 @@ See the COPYING file.
 Assuming installation instructions above were followed.
 
  $ cd vendor/plugins/redmin_sql_reports
- $ git pull .
+ $ git pull
  # may need $ export RAILS_ENV="production"
  $ rake db:migrate_plugins
