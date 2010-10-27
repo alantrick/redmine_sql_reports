@@ -18,7 +18,7 @@ class SqlReport < ActiveRecord::Base
   end
   
   def self.find_in_order
-    SqlReport.find :all, :order => connection.quote_column_name('order')
+    SqlReport.find :all, :order => connection.quote_column_name('order') + ', title'
   end
   
   def visible?(user)
