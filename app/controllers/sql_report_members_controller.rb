@@ -59,11 +59,12 @@ class SqlReportMembersController < ApplicationController
 
   def destroy
     render_403 if !User.current.admin?
-    @member = SqlReportMember.find_by_sql_report_id_and_principal_id params[:sql_report_id], params[:principal_id]
+    @member = SqlReportMember.find_by_id params[:id]
+    render_404 if @member == nil
     @report = @member.sql_report
     @member.destroy if request.post?
     respond_to do |format|
-      format.html { redirect_to :controller => 'sql_reports', :action => 'settings', :tab => 'members', :id => @report }
+      format.html { redirect_to :controller => 'sql_reports', :action => 'settings', :tab => 'members', :id => @member }
       format.js { 
         render(:update) {|page| 
           page.replace_html "tab-content-members", :partial => 'sql_reports/members'

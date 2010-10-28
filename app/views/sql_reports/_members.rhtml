@@ -1,4 +1,4 @@
-<% members = @report.sql_report_members.find(:all, :include => [:principal]).sort %>
+<% members = @report.sql_report_members.find(:all, :include => [:principal]) %>
   
 <div class="splitcontentleft">
 <% if members.any? %>
@@ -14,13 +14,11 @@
   <td class="<%= member.principal.class.name.downcase %>"><%= link_to_user member.principal %></td>
   <td class="buttons">
       <%= link_to_remote(l(:button_delete),
-        {:url => {
-          :controller => 'sql_report_members', :action => 'destroy',
-            :principal_id => member.principal, :sql_report_id => @report
-          },                                              
+        {
+          :url => { :controller=>'sql_report_members', :action=>'destroy', :id=>member.id },                                              
           :method => :post,
         },
-        :title => l(:button_delete), :class => 'icon icon-del') %>
+        :title => l(:button_delete), :class => 'icon icon-del') if member.deletable? %>
   </td>
   </tr>
 <% end; reset_cycle %>
