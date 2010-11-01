@@ -1,6 +1,11 @@
 <div class="box tabular">
 <p><%= f.text_field :title, :required => true, :size => 60 %></p>
 <p><%= f.text_area :query, :required => true, :cols => 77, :rows => 2 %></p>
+
+<% unless @categories.empty? %>
+<p><%= f.select :category_id, (@categories.collect {|c| [c.name, c.id]}), :include_blank => true %></p>
+<% end %>
+
 <p><%= f.text_field :order %></p>
 <p><%= f.check_box :public %></p>
 </div>

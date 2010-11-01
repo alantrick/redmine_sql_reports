@@ -1,0 +1,8 @@
+<div class="contextual">
+<%= link_to_if_admin l(:add_category), { :controller => 'sql_report_categories', :action => 'add'},
+  :class => 'icon icon-add' -%>
+</div>
+<h2><%= l(:categories_title) %></h2>
+<div id='category-table'>
+<%= render :partial => 'table', :locals => {:categories => @categories} -%>
+</div>

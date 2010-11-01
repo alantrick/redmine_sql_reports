@@ -5,8 +5,10 @@ class SqlReport < ActiveRecord::Base
   unloadable
   has_many :sql_report_members
   has_many :principals, :through => :sql_report_members
+  belongs_to :category, :class_name=>'SqlReportCategory', :foreign_key => 'assigned_to_id'
   
   named_scope :visible, lambda { { :conditions => SqlReport.visible_by(User.current) } }
+  named_scope :uncategorized, :conditions => ['category_id IS ?', nil]
   
   def self.visible_by(user)
     return {} if user.admin? # no constraints for admin

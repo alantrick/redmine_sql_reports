@@ -1,0 +1,29 @@
+<% if @categories.any? %>
+<table>
+<thead><tr>
+  <th><%= l(:field_name) %></th>
+  <th><%= l(:field_order) %></th>
+  <th style="width:15%"></th>
+</tr></thead>
+<tbody>
+<% @categories.each do |cat| %>
+<tr>
+  <td><%= cat[:name] %></td>
+  <td><%= cat[:order] %></td>
+  <td class="buttons">
+      <%= link_to(l(:button_edit),
+        { :controller=>'sql_report_categories', :action=>'edit', :id=>cat.id },
+        :class => 'icon icon-edit') %>
+      <%= link_to_remote(l(:button_delete),
+        {
+          :url => { :controller=>'sql_report_categories', :action=>'destroy', :id=>cat.id },                                              
+          :method => :post,
+        },
+        :title => l(:button_delete), :class => 'icon icon-del') %>
+  </td>
+  </tr>
+<% end %>
+</tbody></table>
+<% else %>
+<p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>

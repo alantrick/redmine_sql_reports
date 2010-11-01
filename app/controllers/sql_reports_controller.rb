@@ -7,7 +7,8 @@ class SqlReportsController < ApplicationController
   before_filter :authorize_global
   
   def index
-    @reports = SqlReport.visible.find_in_order
+    @categories = SqlReportCategory.find_in_order
+    @uncategorized = SqlReport.uncategorized.visible.find_in_order
   end
   
   def show
@@ -45,6 +46,7 @@ class SqlReportsController < ApplicationController
     render_403 if !User.current.admin
     render_404 if !SqlReport.exists? params[:id]
     @report = SqlReport.find params[:id]
+    @categories = SqlReportCategory.find_in_order
     if request.post? and @report.update_attributes(params[:report])
       flash[:notice] = l(:notice_successful_update)
       redirect_to :action => 'show', :id => @report
@@ -54,6 +56,7 @@ class SqlReportsController < ApplicationController
   def add
     render_403 if !User.current.admin
     @report = SqlReport.new params[:report]
+    @categories = SqlReportCategory.find_in_order
     if request.post?
       @report.save
       flash[:notice] = l(:notice_successful_update)

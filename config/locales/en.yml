@@ -8,6 +8,9 @@ en:
   report_title: "Report: {{report}}"
   add_report_title: "Add Report"
   edit_report_title: "Editing Report: {{report}}"
+  categories_title: Categories
+  add_category: Add Category
+  edit_category: Editing Category
   field_query: "Query"
   field_order: "Order"
   field_public: "Public"

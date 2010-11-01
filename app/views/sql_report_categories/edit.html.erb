@@ -1,0 +1,11 @@
+<% html_title l(:edit_category) -%>
+<h2><%= l(:edit_category) %></h2>
+
+<% form_for :category, @cat, :url => { :action => "edit" },
+                                  :builder => TabularFormBuilder, 
+                                  :html => { :id => 'category-form', 
+                                             :class => nil } do |f| %>
+<%= render :partial => 'form', :locals => {:f => f} -%>
+
+<%= submit_tag l(:button_edit) %>
+<% end %> 

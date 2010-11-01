@@ -1,12 +1,26 @@
 <div class="contextual">
 <%= link_to_if_admin l(:add_report), { :controller => 'sql_reports', :action => 'add'},
     :class => 'icon icon-add' -%>
+<%= link_to_if_admin l(:categories_title), { :controller => 'sql_report_categories', :action => 'index'},
+  :class => 'icon icon-edit' -%>
 </div>
-<h3><%= l(:sql_reports_title) %></h2>
+<h2><%= l(:sql_reports_title) %></h2>
+
 <ul>
-<% @reports.each do |report| %>
-  <li>
-  <%= link_to report[:title], {:controller => 'sql_reports', :action => 'show', :id => report[:id]} %>
-  </li>
-<% end %>
+<%- @uncategorized.each do |report| -%>
+  <li><%= link_to report, 
+    {:controller => 'sql_reports', :action => 'show', :id => report[:id]} -%></li>
+<%- end -%>
+<%- if @categories.any? -%>
+<%- @categories.each do |cat| -%>
+  <%- if cat.sql_reports.visible.any? %>
+  <li><%= cat %><ul>
+    <%- cat.sql_reports.visible.each do |report| -%>
+    <li><%= link_to report,
+      {:controller => 'sql_reports', :action => 'show', :id => report[:id]} -%></li>
+    <%- end -%>
+  </ul></li>
+  <%- end -%>
+<%- end -%>
+<%- end -%>
 </ul>
