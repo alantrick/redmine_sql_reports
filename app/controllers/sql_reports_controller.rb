@@ -57,8 +57,7 @@ class SqlReportsController < ApplicationController
     render_403 if !User.current.admin
     @report = SqlReport.new params[:report]
     @categories = SqlReportCategory.find_in_order
-    if request.post?
-      @report.save
+    if request.post? and @report.save
       flash[:notice] = l(:notice_successful_update)
       redirect_to :action => 'show', :id => @report
     end

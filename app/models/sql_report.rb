@@ -7,6 +7,9 @@ class SqlReport < ActiveRecord::Base
   has_many :principals, :through => :sql_report_members
   belongs_to :category, :class_name=>'SqlReportCategory', :foreign_key => 'assigned_to_id'
   
+  validates_presence_of :title
+  validates_presence_of :query
+  
   named_scope :visible, lambda { { :conditions => SqlReport.visible_by(User.current) } }
   named_scope :uncategorized, :conditions => ['category_id IS ?', nil]
   
