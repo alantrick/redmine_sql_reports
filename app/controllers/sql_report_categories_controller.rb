@@ -6,7 +6,7 @@ class SqlReportCategoriesController < ApplicationController
   before_filter :authorize_global
 
   def index
-    @categories = SqlReportCategory.find_in_order
+    @categories = SqlReportCategory.in_order
   end
   
   def add
@@ -62,7 +62,7 @@ class SqlReportCategoriesController < ApplicationController
       format.html { redirect_to :action => 'index' }
       format.js { 
         render(:update) {|page| 
-          @categories = SqlReportCategory.find_in_order
+          @categories = SqlReportCategory.in_order
           page.replace_html "category-table", :partial => 'sql_report_categories/table'
           page << 'hideOnLoad()'
         }

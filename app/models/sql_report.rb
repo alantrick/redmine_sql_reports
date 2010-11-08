@@ -10,6 +10,7 @@ class SqlReport < ActiveRecord::Base
   validates_presence_of :title
   validates_presence_of :query
   
+  named_scope :in_order, :order => connection.quote_column_name('order') + ', title'
   named_scope :visible, lambda { { :conditions => SqlReport.visible_by(User.current) } }
   named_scope :uncategorized, :conditions => ['category_id IS ?', nil]
   
@@ -20,10 +21,6 @@ class SqlReport < ActiveRecord::Base
     constraint = "public = #{connection.quoted_true}"
     constraint = ["id IN (?) OR " + constraint, report_ids] if report_ids.any?
     return constraint
-  end
-  
-  def self.find_in_order
-    SqlReport.find :all, :order => connection.quote_column_name('order') + ', title'
   end
   
   def visible?(user)

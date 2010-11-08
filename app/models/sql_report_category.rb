@@ -5,13 +5,10 @@ class SqlReportCategory < ActiveRecord::Base
   belongs_to :sql_report
   has_many :sql_reports, :foreign_key => 'category_id', :dependent => :nullify
 
+  named_scope :in_order, :order => connection.quote_column_name('order') + ', name'
   validates_presence_of :name
   validates_length_of :name, :maximum => 30
 
-  def self.find_in_order
-    SqlReportCategory.find :all, :order => connection.quote_column_name('order') + ', name'
-  end
-  
   def to_s; name end
 
 end 

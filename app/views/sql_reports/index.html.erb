@@ -15,7 +15,7 @@
 <%- @categories.each do |cat| -%>
   <%- if cat.sql_reports.visible.any? %>
   <li><%= cat %><ul>
-    <%- cat.sql_reports.visible.each do |report| -%>
+    <%- cat.sql_reports.in_order.visible.each do |report| -%>
     <li><%= link_to report,
       {:controller => 'sql_reports', :action => 'show', :id => report[:id]} -%></li>
     <%- end -%>
