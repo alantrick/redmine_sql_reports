@@ -1,8 +1,10 @@
 # Copyright (C) 2010 Alan Trick, Trinity Western University
 # see COPYING for license
 require 'csv'
+require 'vendor/plugins/redmine_sql_reports/app/helpers/sql_reports_helper'
 
 class SqlReportsController < ApplicationController
+  include SqlReportsHelper
   unloadable
   before_filter :authorize_global
   
@@ -29,9 +31,9 @@ class SqlReportsController < ApplicationController
       format.csv do
         report = StringIO.new
         CSV::Writer.generate(report, ',') do |csv|
-          csv << @table.columns
+          csv << @table.columns.map { |col| report_header col }
           @table.rows do |row|
-            csv << row.values
+            csv << @table.columns.map { |col| row[col] }
           end
         end
         report.rewind
