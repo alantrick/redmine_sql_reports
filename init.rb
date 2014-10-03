@@ -22,7 +22,7 @@ Redmine::Plugin.register :redmine_sql_reports do
   description 'Allows the creation of reports using arbitrary SQL'
   version '0.3.2'
   url 'http://github.com/alantrick/redmine_sql_reports'
-  author_url 'http://tricks.webfactional.com/trick'
+  author_url 'http://alantrick.ca'
   
   permission :view_reports, {:sql_reports => [:index, :show, :edit, :add]}, :require => :loggedin
   
